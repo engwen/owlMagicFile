@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owl.magicFile.dao.OMFileDao" >
+  <resultMap id="BaseResultMap" type="com.owl.magicFile.model.OMFile" >
+    <result column="md5" property="md5" jdbcType="VARCHAR" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+     md5, upload_time
+  </sql>
+  <select id="selectByMD5" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from omfile
+    where md5 = #{md5,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" parameterType="com.owl.magicFile.model.OMFile" >
+    insert into omfile (md5, upload_time
+      )
+    values (#{md5,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+</mapper>
