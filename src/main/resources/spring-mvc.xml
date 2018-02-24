@@ -25,6 +25,8 @@
         </mvc:interceptor>
         <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->
     </mvc:interceptors>
+    <!-- 静态资源映射 -->
+    <mvc:resources location="/WEB-INF/assets/js/" mapping="/js/**"/>
 
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter"
