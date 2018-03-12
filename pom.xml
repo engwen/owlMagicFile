@@ -7,6 +7,54 @@
   <version>1.0-SNAPSHOT</version>
   <name>owlMagicFile Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <profiles>
+    <!-- 本地开发环境 -->
+    <profile>
+      <id>develop</id>
+      <properties>
+        <env>develop</env>
+        <profiles.active>develop</profiles.active>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources/environment/develop</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <!-- 测试环境 -->
+    <profile>
+      <id>testProduct</id>
+      <properties>
+        <profiles.active>testProduct</profiles.active>
+      </properties>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources/environment/testProduct</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <!-- 生产环境 -->
+    <profile>
+      <id>product</id>
+      <properties>
+        <profiles.active>product</profiles.active>
+      </properties>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources/environment/product</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+  </profiles>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
