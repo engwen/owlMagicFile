@@ -13,7 +13,6 @@
       <id>develop</id>
       <properties>
         <env>develop</env>
-        <profiles.active>develop</profiles.active>
       </properties>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -23,6 +22,9 @@
           <resource>
             <directory>src/main/resources/environment/develop</directory>
           </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
       </build>
     </profile>
@@ -30,13 +32,16 @@
     <profile>
       <id>testProduct</id>
       <properties>
-        <profiles.active>testProduct</profiles.active>
+        <env>testProduct</env>
       </properties>
       <build>
         <resources>
           <resource>
             <directory>src/main/resources/environment/testProduct</directory>
           </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
       </build>
     </profile>
@@ -44,13 +49,16 @@
     <profile>
       <id>product</id>
       <properties>
-        <profiles.active>product</profiles.active>
+        <env>product</env>
       </properties>
       <build>
         <resources>
           <resource>
             <directory>src/main/resources/environment/product</directory>
           </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
       </build>
     </profile>

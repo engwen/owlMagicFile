@@ -14,7 +14,7 @@
 
     <!-- 第一种方式：加载一个properties文件 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:/magic_file.properties"/>
+        <property name="location" value="classpath:magic_file_databases.properties"/>
     </bean>
 
 
@@ -36,7 +36,7 @@
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="${driverClasss}"/>
+        <property name="driverClassName" value="${driverClass}"/>
         <property name="url" value="${jdbcUrl}"/>
         <property name="username" value="${username}"/>
         <property name="password" value="${password}"/>
