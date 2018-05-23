@@ -94,7 +94,7 @@ public class FileController {
     @RequestMapping("/download")
     public void download(HttpServletResponse response, String md5) {
         logger.info("download file");
-        File file = fileService.downloads(md5);
+        File file = fileService.selectByMD5(md5);
         if (file == null || !file.exists()) {
             return;
         }

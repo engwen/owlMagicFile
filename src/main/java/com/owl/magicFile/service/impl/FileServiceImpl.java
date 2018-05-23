@@ -41,8 +41,8 @@ public class FileServiceImpl implements OMFileService {
      * @param md5
      * @return
      */
-    public File downloads(String md5) {
-        logger.info("request downloads file");
+    public File selectByMD5(String md5) {
+        logger.info("request selectByMD5 file");
         File result = null;
         OMFile file = fileDao.selectByMD5(md5);
         if (null != file) {
@@ -90,7 +90,7 @@ public class FileServiceImpl implements OMFileService {
      */
     public PageVO<OMFileVO> uploadFilesByFrom(MultipartFile[] files) {
         logger.info("request uploadByRequest file");
-        PageVO<OMFileVO> filePageVO = new PageVO<>();
+        PageVO<OMFileVO> filePageVO = new PageVO<OMFileVO>();
         for (MultipartFile mf : files) {
             if (!mf.isEmpty()) {
                 filePageVO.getObjectList().add(uploadFileByFrom(mf));
