@@ -1,7 +1,6 @@
 package com.owl.magicFile.service;
 
 
-
 import com.owl.magicFile.vo.OMFileVO;
 import com.owl.magicUtil.vo.PageVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +19,9 @@ public interface OMFileService {
     OMFileVO uploadFileByBase64(String fileBase64);
 
     PageVO<OMFileVO> uploadFilesByFrom(MultipartFile[] files);
+
     OMFileVO uploadFileByFrom(MultipartFile file);
 
-    //    下載文件
-    File downloads(String MD5);
+    //    查詢將要下載的文件
+    File selectByMD5(String MD5);
 }

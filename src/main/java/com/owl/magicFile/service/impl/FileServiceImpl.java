@@ -28,10 +28,10 @@ import java.util.UUID;
  *         2017/7/11.
  */
 @Service("fileService")
-public class FileService implements OMFileService {
+public class FileServiceImpl implements OMFileService {
     private static final String uploadPath = PropertiesUtil.readConfigProperties("upload.path.dir");
 
-    private static Logger logger = Logger.getLogger(FileService.class.getName());
+    private static Logger logger = Logger.getLogger(FileServiceImpl.class.getName());
     @Resource
     OMFileDao fileDao;
 
@@ -41,8 +41,8 @@ public class FileService implements OMFileService {
      * @param md5
      * @return
      */
-    public File downloads(String md5) {
-        logger.info("request downloads file");
+    public File selectByMD5(String md5) {
+        logger.info("request selectByMD5 file");
         File result = null;
         OMFile file = fileDao.selectByMD5(md5);
         if (null != file) {
@@ -90,7 +90,7 @@ public class FileService implements OMFileService {
      */
     public PageVO<OMFileVO> uploadFilesByFrom(MultipartFile[] files) {
         logger.info("request uploadByRequest file");
-        PageVO<OMFileVO> filePageVO = new PageVO<>();
+        PageVO<OMFileVO> filePageVO = new PageVO<OMFileVO>();
         for (MultipartFile mf : files) {
             if (!mf.isEmpty()) {
                 filePageVO.getObjectList().add(uploadFileByFrom(mf));
