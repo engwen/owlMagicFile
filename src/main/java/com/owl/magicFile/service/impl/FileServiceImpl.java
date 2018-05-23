@@ -28,10 +28,10 @@ import java.util.UUID;
  *         2017/7/11.
  */
 @Service("fileService")
-public class FileService implements OMFileService {
+public class FileServiceImpl implements OMFileService {
     private static final String uploadPath = PropertiesUtil.readConfigProperties("upload.path.dir");
 
-    private static Logger logger = Logger.getLogger(FileService.class.getName());
+    private static Logger logger = Logger.getLogger(FileServiceImpl.class.getName());
     @Resource
     OMFileDao fileDao;
 
