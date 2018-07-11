@@ -4,6 +4,7 @@ import com.owl.magicFile.service.OMFileService;
 import com.owl.magicUtil.constant.MsgConstantUtil;
 import com.owl.magicUtil.model.MsgResult;
 import com.owl.magicUtil.util.RegexUtil;
+import com.owl.magicUtil.vo.MsgResultVO;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 /**
  * 文件控製類
  * @author engwen
- *         email xiachanzou@outlook.com
- *         2017/7/13.
+ * email xiachanzou@outlook.com
+ * 2017/7/13.
  */
 @Controller
 @RequestMapping("file")
@@ -39,7 +41,7 @@ public class FileController {
     @RequestMapping("/uploadFilesByFrom")
     public MsgResult uploadFilesByFrom(@RequestParam("files") MultipartFile[] files) {
         logger.info("upload files by form");
-        MsgResult result = new MsgResult();
+        MsgResult result = new MsgResultVO();
         if (null != files && files.length > 0) {
             result = fileService.uploadFilesByFrom(files);
         } else {
@@ -57,7 +59,7 @@ public class FileController {
     @RequestMapping("/uploadFileByFrom")
     public MsgResult uploadFileByFrom(@RequestParam("file") MultipartFile file) {
         logger.info("upload file by form");
-        MsgResult result = new MsgResult();
+        MsgResult result = new MsgResultVO();
         if (!file.isEmpty()) {
             result = fileService.uploadFileByFrom(file);
         } else {
@@ -75,7 +77,7 @@ public class FileController {
     @RequestMapping("/uploadFileByBase64")
     public MsgResult uploadFileByBase64(String byBase64) {
         logger.info("upload file by base64");
-        MsgResult result = new MsgResult();
+        MsgResult result = new MsgResultVO();
         if (RegexUtil.isEmpty(byBase64)) {
             result.errorResult(MsgConstantUtil.REQUEST_PARAMETER_ERROR_CODE, MsgConstantUtil.REQUEST_PARAMETER_ERROR_MSG);
         } else {
@@ -99,6 +101,7 @@ public class FileController {
             return;
         }
         try {
+            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(file.getName(), "UTF-8"));
             FileInputStream in = new FileInputStream(file);
             OutputStream out = response.getOutputStream();
             byte buffer[] = new byte[1024];
