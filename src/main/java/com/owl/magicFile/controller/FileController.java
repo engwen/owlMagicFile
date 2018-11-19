@@ -1,8 +1,8 @@
 package com.owl.magicFile.controller;
 
 import com.owl.magicFile.service.OMFileService;
+import com.owl.magicUtil.constant.MsgConstantEM;
 import com.owl.magicUtil.constant.MsgConstantUtil;
-import com.owl.magicUtil.model.MsgResult;
 import com.owl.magicUtil.util.RegexUtil;
 import com.owl.magicUtil.vo.MsgResultVO;
 import org.apache.log4j.Logger;
@@ -14,13 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.net.URLEncoder;
 
 /**
  * 文件控製類
+ *
  * @author engwen
  * email xiachanzou@outlook.com
  * 2017/7/13.
@@ -34,14 +31,15 @@ public class FileController {
 
     /**
      * 多文件上传 指定 from 表單屬性 enctype="multipart/form-data" ，指定from表單中待提交文件name為 files
+     *
      * @param files
      * @return
      */
     @ResponseBody
     @RequestMapping("/uploadFilesByFrom")
-    public MsgResult uploadFilesByFrom(@RequestParam("files") MultipartFile[] files) {
+    public MsgResultVO uploadFilesByFrom(@RequestParam("files") MultipartFile[] files) {
         logger.info("upload files by form");
-        MsgResult result = new MsgResultVO();
+        MsgResultVO result = new MsgResultVO();
         if (null != files && files.length > 0) {
             result = fileService.uploadFilesByFrom(files);
         } else {
@@ -52,32 +50,34 @@ public class FileController {
 
     /**
      * 单文件上传 指定 from 表單屬性 enctype="multipart/form-data" ，指定from表單中待提交文件name為 file
+     *
      * @param file
      * @return
      */
     @ResponseBody
     @RequestMapping("/uploadFileByFrom")
-    public MsgResult uploadFileByFrom(@RequestParam("file") MultipartFile file) {
+    public MsgResultVO uploadFileByFrom(@RequestParam("file") MultipartFile file) {
         logger.info("upload file by form");
-        MsgResult result = new MsgResultVO();
+        MsgResultVO result = new MsgResultVO();
         if (!file.isEmpty()) {
             result = fileService.uploadFileByFrom(file);
         } else {
-            result.errorResult(MsgConstantUtil.REQUEST_PARAMETER_ERROR_CODE, MsgConstantUtil.REQUEST_PARAMETER_ERROR_MSG);
+            result.errorResult(MsgConstantEM.REQUEST_PARAMETER_ERROR);
         }
         return result;
     }
 
     /**
      * 使用base64上传文件
+     *
      * @param byBase64
      * @return
      */
     @ResponseBody
     @RequestMapping("/uploadFileByBase64")
-    public MsgResult uploadFileByBase64(String byBase64) {
+    public MsgResultVO uploadFileByBase64(String byBase64) {
         logger.info("upload file by base64");
-        MsgResult result = new MsgResultVO();
+        MsgResultVO result = new MsgResultVO();
         if (RegexUtil.isEmpty(byBase64)) {
             result.errorResult(MsgConstantUtil.REQUEST_PARAMETER_ERROR_CODE, MsgConstantUtil.REQUEST_PARAMETER_ERROR_MSG);
         } else {
@@ -89,6 +89,7 @@ public class FileController {
 
     /**
      * 下载
+     *
      * @param response
      * @param md5
      */
@@ -96,23 +97,6 @@ public class FileController {
     @RequestMapping("/download")
     public void download(HttpServletResponse response, String md5) {
         logger.info("download file");
-        File file = fileService.selectByMD5(md5);
-        if (file == null || !file.exists()) {
-            return;
-        }
-        try {
-            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(file.getName(), "UTF-8"));
-            FileInputStream in = new FileInputStream(file);
-            OutputStream out = response.getOutputStream();
-            byte buffer[] = new byte[1024];
-            int len = 0;
-            while ((len = in.read(buffer)) > 0) {
-                out.write(buffer, 0, len);
-            }
-            in.close();
-            out.close();
-        } catch (Exception e) {
-            System.out.print(e);
-        }
+        fileService.download(response, md5);
     }
 }

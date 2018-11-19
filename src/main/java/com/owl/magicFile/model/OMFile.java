@@ -1,12 +1,11 @@
 package com.owl.magicFile.model;
 
 
-
-import com.owl.magicUtil.model.MsgResult;
+import com.owl.magicUtil.model.ModelPrototype;
 
 import java.util.Date;
 
-public class OMFile extends MsgResult {
+public class OMFile extends ModelPrototype {
     private String md5;
 
     private Date uploadTime;

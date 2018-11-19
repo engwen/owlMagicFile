@@ -1,27 +1,31 @@
 package com.owl.magicFile.service;
 
 
+import com.owl.magicFile.model.OMFile;
 import com.owl.magicFile.vo.OMFileVO;
-import com.owl.magicUtil.vo.PageVO;
+import com.owl.magicUtil.vo.MsgResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 文件服務類
+ *
  * @author engwen
- *         email xiachanzou@outlook.com
- *         2017/7/11.
+ * email xiachanzou@outlook.com
+ * 2017/7/11.
  */
 public interface OMFileService {
 
     //    上傳文件
-    OMFileVO uploadFileByBase64(String fileBase64);
+    MsgResultVO<OMFileVO> uploadFileByBase64(String fileBase64);
 
-    PageVO<OMFileVO> uploadFilesByFrom(MultipartFile[] files);
+    MsgResultVO<List<OMFileVO>> uploadFilesByFrom(MultipartFile[] files);
 
-    OMFileVO uploadFileByFrom(MultipartFile file);
+    MsgResultVO<OMFileVO> uploadFileByFrom(MultipartFile file);
 
+    void download(HttpServletResponse response, String md5);
     //    查詢將要下載的文件
-    File selectByMD5(String MD5);
+    MsgResultVO<OMFile> selectByMD5(String MD5);
 }
