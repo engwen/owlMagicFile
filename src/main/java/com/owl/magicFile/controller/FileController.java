@@ -1,8 +1,7 @@
 package com.owl.magicFile.controller;
 
 import com.owl.magicFile.service.OMFileService;
-import com.owl.magicUtil.constant.MsgConstantEM;
-import com.owl.magicUtil.constant.MsgConstantUtil;
+import com.owl.magicUtil.model.MsgConstant;
 import com.owl.magicUtil.util.RegexUtil;
 import com.owl.magicUtil.vo.MsgResultVO;
 import org.apache.log4j.Logger;
@@ -43,7 +42,7 @@ public class FileController {
         if (null != files && files.length > 0) {
             result = fileService.uploadFilesByFrom(files);
         } else {
-            result.errorResult(MsgConstantUtil.REQUEST_PARAMETER_ERROR_CODE, MsgConstantUtil.REQUEST_PARAMETER_ERROR_MSG);
+            result.errorResult(MsgConstant.REQUEST_PARAMETER_ERROR);
         }
         return result;
     }
@@ -62,7 +61,7 @@ public class FileController {
         if (!file.isEmpty()) {
             result = fileService.uploadFileByFrom(file);
         } else {
-            result.errorResult(MsgConstantEM.REQUEST_PARAMETER_ERROR);
+            result.errorResult(MsgConstant.REQUEST_PARAMETER_ERROR);
         }
         return result;
     }
@@ -79,7 +78,7 @@ public class FileController {
         logger.info("upload file by base64");
         MsgResultVO result = new MsgResultVO();
         if (RegexUtil.isEmpty(byBase64)) {
-            result.errorResult(MsgConstantUtil.REQUEST_PARAMETER_ERROR_CODE, MsgConstantUtil.REQUEST_PARAMETER_ERROR_MSG);
+            result.errorResult(MsgConstant.REQUEST_PARAMETER_ERROR);
         } else {
             result = fileService.uploadFileByBase64(byBase64);
         }

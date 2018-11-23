@@ -6,7 +6,7 @@ import com.owl.magicFile.model.OMFile;
 import com.owl.magicFile.service.OMFileService;
 import com.owl.magicFile.utils.PropertiesUtil;
 import com.owl.magicFile.vo.OMFileVO;
-import com.owl.magicUtil.constant.MsgConstantEM;
+import com.owl.magicUtil.model.MsgConstant;
 import com.owl.magicUtil.util.MD5Util;
 import com.owl.magicUtil.vo.MsgResultVO;
 import org.apache.log4j.Logger;
@@ -52,7 +52,7 @@ public class FileServiceImpl implements OMFileService {
         if (null != file) {
             result.successResult(file);
         } else {
-            result.errorResult(MsgConstantEM.REQUEST_NOT_EXITS);
+            result.errorResult(MsgConstant.REQUEST_NOT_EXITS);
         }
         return result;
     }
@@ -87,7 +87,7 @@ public class FileServiceImpl implements OMFileService {
             result.successResult(fileVO);
         } catch (Exception e) {
             logger.error("upload by base64 is error " + e);
-            result.errorResult(MsgConstantEM.REQUEST_NO_KNOW_ERROR);
+            result.errorResult(MsgConstant.REQUEST_NO_KNOW_ERROR);
         }
         return result;
     }
@@ -124,7 +124,7 @@ public class FileServiceImpl implements OMFileService {
             result.successResult(fileVO);
         } catch (Exception e) {
             logger.info("uploadByRequest is error" + e);
-            result.errorResult(MsgConstantEM.REQUEST_NO_KNOW_ERROR);
+            result.errorResult(MsgConstant.REQUEST_NO_KNOW_ERROR);
         }
         return result;
     }
